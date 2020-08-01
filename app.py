@@ -52,7 +52,7 @@ def questions(surv, num):
             question = survey.questions[question_num - 1]
             choices = question.choices
             return render_template('question.html', question_num=question_num, question=question.question, choices=choices)
-        return redirect('/thankyou')
+        return redirect(f'/thankyou/{surv}')
     else:
         flash('Invalid question! Please do the survey in order.')
         return redirect(f'/questions/{survey_id}/{question_num}')
@@ -69,6 +69,11 @@ def add_answer():
     session['responses'] = responses
     return redirect(f'/questions/{survey_id}/{question_num}')
 
-@app.route('/thankyou')
-def thank_you():
-    return render_template('thank_you.html')
+@app.route('/thankyou/<surv>')
+def thank_you(surv):
+    survey = surveys[surv]
+    questions = survey.questions
+    responses = session['responses']
+    for i in range(len(questions)):
+        questions[i].response = responses[i]
+    return render_template('thank_you.html', title=survey.title, questions=questions)
