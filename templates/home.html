@@ -2,9 +2,13 @@
 {% block title %}Survey Home{% endblock %}
 
 {% block content %}
-<h1>{{ title }}</h1>
-<p>{{ instructions }}</p>
-<form action="/questions/{{ num }}">
-    <button>Start Survey</button>
+<h1>Choose a survey to fill out!</h1>
+<form action="/survey-choice" method="POST">
+    <label for="survey">Choose a survey:</label>
+    <select name="survey">
+        <option value="satisfaction">Customer Satisfaction Survey</option>
+        <option value="personality">Rithm Personality Quiz</option>
+    </select>
+    <button>Go!</button>
 </form>
 {% endblock %}
