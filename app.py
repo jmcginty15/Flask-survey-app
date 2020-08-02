@@ -91,7 +91,7 @@ def thank_you(surv):
     global incomplete_surveys
     survey = surveys[surv]
     questions = survey.questions
-    completed_surveys.append(survey.title)
+    completed_surveys.append({'ident': surv, 'title': survey.title})
     incomplete_surveys = [incomplete for incomplete in incomplete_surveys if incomplete['ident'] != surv]
     session['completed'] = completed_surveys
     session['incomplete'] = incomplete_surveys
@@ -103,4 +103,11 @@ def thank_you(surv):
         if questions[i].allow_text:
             questions[i].comment = comments[j]
             j += 1
+    survey.questions = questions
     return render_template('thank_you.html', title=survey.title, questions=questions)
+
+@app.route('/see-answers/<surv>')
+def see_answers(surv):
+    """Displays answers for the chosen completed survey"""
+    survey = surveys[surv]
+    return render_template('answers.html', title=survey.title, questions=survey.questions)

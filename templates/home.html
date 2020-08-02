@@ -15,7 +15,7 @@
 <h2>Completed surveys:</h2>
 <ul>
     {% for survey in completed %}
-    <li>{{ survey }}</li>
+    <li>{{ survey.title }} (<a href='/see-answers/{{ survey.ident }}'><i>See answers</i></a>)</li>
     {% endfor %}
 </ul>
 {% endblock %}

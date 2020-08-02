@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }} Answers{% endblock %}
+
+{% block content %}
+<h1>Your answers to the {{ title }}:</h1>
+<ul>
+    {% for question in questions %}
+    <li><b>{{ question.question }}</b> {{ question.response }} <i>{{ question.comment }}</i></li>
+    {% endfor %}
+</ul>
+<form action="/">
+    <button>Back to Home</button>
+</form>
+{% endblock %}
