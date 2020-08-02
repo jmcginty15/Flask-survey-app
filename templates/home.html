@@ -6,9 +6,16 @@
 <form action="/survey-choice" method="POST">
     <label for="survey">Choose a survey:</label>
     <select name="survey">
-        <option value="satisfaction">Customer Satisfaction Survey</option>
-        <option value="personality">Rithm Personality Quiz</option>
+        {% for survey in incomplete %}
+        <option value="{{ survey.ident }}">{{ survey.title }}</option>
+        {% endfor %}
     </select>
     <button>Go!</button>
 </form>
+<h2>Completed surveys:</h2>
+<ul>
+    {% for survey in completed %}
+    <li>{{ survey }}</li>
+    {% endfor %}
+</ul>
 {% endblock %}

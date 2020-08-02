@@ -9,6 +9,8 @@ debug = DebugToolbarExtension(app)
 
 responses = []
 comments = []
+completed_surveys = []
+incomplete_surveys = [{'ident': 'satisfaction', 'title': satisfaction_survey.title}, {'ident': 'personality', 'title': personality_quiz.title}]
 survey_id = ''
 question_num = 1
 
@@ -17,9 +19,16 @@ def home_page():
     """Displays the home page"""
     global question_num
     global responses
+    global completed_surveys
+    global incomplete_surveys
     question_num = 1
     responses = []
-    return render_template('home.html')
+    comments = []
+    try:
+        completed_surveys = session['completed']
+        incomplete_surveys = session['incomplete']
+    finally:
+        return render_template('home.html', incomplete=incomplete_surveys, completed=completed_surveys)
 
 @app.route('/survey-choice', methods=['POST'])
 def survey_choice():
@@ -78,8 +87,14 @@ def add_answer():
 
 @app.route('/thankyou/<surv>')
 def thank_you(surv):
+    """Displays the Thank You page with a list of questions and answers"""
+    global incomplete_surveys
     survey = surveys[surv]
     questions = survey.questions
+    completed_surveys.append(survey.title)
+    incomplete_surveys = [incomplete for incomplete in incomplete_surveys if incomplete['ident'] != surv]
+    session['completed'] = completed_surveys
+    session['incomplete'] = incomplete_surveys
     responses = session['responses']
     comments = session['comments']
     j = 0
