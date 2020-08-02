@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Question{% endblock %}
+{% block title %}Question {{ question_num }}{% endblock %}
 
 {% block content %}
 <h1>Question {{ question_num }}</h1>
@@ -12,6 +12,11 @@
     <input type="radio" name="choice" value="{{ choice }}">
     <label for="{{ choice }}">{{ choice }}</label><br>
     {% endfor %}
+    {% if allow_text %}
+    <p>
+        <textarea name="comment" placeholder="Tell us why!"></textarea>
+    </p>
+    {% endif %}
     <p>
         <button>Submit</button>
     </p>

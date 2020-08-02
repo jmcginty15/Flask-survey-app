@@ -8,6 +8,7 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 debug = DebugToolbarExtension(app)
 
 responses = []
+comments = []
 survey_id = ''
 question_num = 1
 
@@ -39,6 +40,7 @@ def session_init():
     global question_num
     global survey_id
     session['responses'] = []
+    session['comments'] = []
     return redirect(f'/questions/{survey_id}/{question_num}')
 
 @app.route('/questions/<surv>/<num>')
@@ -50,8 +52,7 @@ def questions(surv, num):
     if int(num) == question_num:
         if question_num <= len(survey.questions):
             question = survey.questions[question_num - 1]
-            choices = question.choices
-            return render_template('question.html', question_num=question_num, question=question.question, choices=choices)
+            return render_template('question.html', question_num=question_num, question=question.question, choices=question.choices, allow_text=question.allow_text)
         return redirect(f'/thankyou/{surv}')
     else:
         flash('Invalid question! Please do the survey in order.')
@@ -67,13 +68,24 @@ def add_answer():
     responses = session['responses']
     responses.append(answer)
     session['responses'] = responses
-    return redirect(f'/questions/{survey_id}/{question_num}')
+    try:
+        comment = request.form['comment']
+        comments = session['comments']
+        comments.append(comment)
+        session['comments'] = comments
+    finally:
+        return redirect(f'/questions/{survey_id}/{question_num}')
 
 @app.route('/thankyou/<surv>')
 def thank_you(surv):
     survey = surveys[surv]
     questions = survey.questions
     responses = session['responses']
+    comments = session['comments']
+    j = 0
     for i in range(len(questions)):
         questions[i].response = responses[i]
+        if questions[i].allow_text:
+            questions[i].comment = comments[j]
+            j += 1
     return render_template('thank_you.html', title=survey.title, questions=questions)

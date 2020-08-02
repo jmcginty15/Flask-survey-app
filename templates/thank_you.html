@@ -6,7 +6,7 @@
 <p>Thank you for completing the {{ title }}!</p>
 <ul>
     {% for question in questions %}
-    <li><b>{{ question.question }}</b> <i>{{ question.response }}</i></li>
+    <li><b>{{ question.question }}</b> {{ question.response }} <i>{{ question.comment }}</i></li>
     {% endfor %}
 </ul>
 <form action="/">
