@@ -28,7 +28,8 @@ def home_page():
         completed_surveys = session['completed']
         incomplete_surveys = session['incomplete']
     finally:
-        return render_template('home.html', incomplete=incomplete_surveys, completed=completed_surveys)
+        all_complete = False if incomplete_surveys else True
+        return render_template('home.html', incomplete=incomplete_surveys, completed=completed_surveys, all_complete=all_complete)
 
 @app.route('/survey-choice', methods=['POST'])
 def survey_choice():

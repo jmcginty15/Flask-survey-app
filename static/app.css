@@ -1,0 +1,50 @@
+body {
+    background-color: tan;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 0px;
+    margin: 0px;
+}
+
+h1 {
+    background-color: maroon;
+    font-size: 64px;
+    text-align: center;
+    margin-top: 0px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.wrapper {
+    border-style: solid;
+    border-radius: 10px;
+    border-color: black;
+    display: inline-block;
+    margin: auto;
+    padding: 15px;
+    background-color: maroon;
+    color: tan;
+    text-align: left;
+}
+
+.answer {
+    color: black;
+}
+
+.submit-button {
+    margin-bottom: 0px;
+}
+
+#none-yet {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+a {
+    color: tan;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: tan;
+}

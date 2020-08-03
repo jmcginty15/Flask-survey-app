@@ -4,12 +4,16 @@
 {% block content %}
 <h1>Thank You!</h1>
 <p>Thank you for completing the {{ title }}!</p>
-<ul>
-    {% for question in questions %}
-    <li><b>{{ question.question }}</b> {{ question.response }} <i>{{ question.comment }}</i></li>
-    {% endfor %}
-</ul>
+<div class="wrapper">
+    <ul>
+        {% for question in questions %}
+        <li><b>{{ question.question }}</b> <span class="answer">{{ question.response }} <i>{{ question.comment }}</i></span></li>
+        {% endfor %}
+    </ul>
+</div>
+<p>
 <form action="/">
     <button>Back to Home</button>
 </form>
+</p>
 {% endblock %}

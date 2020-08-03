@@ -7,18 +7,20 @@
 <p id="invalid-msg">{{ msg }}</p>
 {% endfor %}
 <p>{{ question }}</p>
-<form action="/answer" method="POST">
-    {% for choice in choices %}
-    <input type="radio" name="choice" value="{{ choice }}">
-    <label for="{{ choice }}">{{ choice }}</label><br>
-    {% endfor %}
-    {% if allow_text %}
-    <p>
-        <textarea name="comment" placeholder="Tell us why!"></textarea>
-    </p>
-    {% endif %}
-    <p>
-        <button>Submit</button>
-    </p>
-</form>
+<div class="wrapper">
+    <form action="/answer" method="POST">
+        {% for choice in choices %}
+        <input type="radio" name="choice" value="{{ choice }}">
+        <label for="{{ choice }}">{{ choice }}</label><br>
+        {% endfor %}
+        {% if allow_text %}
+        <p>
+            <textarea name="comment" placeholder="Tell us why!"></textarea>
+        </p>
+        {% endif %}
+        <p class="submit-button">
+            <button>Submit</button>
+        </p>
+    </form>
+</div>
 {% endblock %}

@@ -3,6 +3,9 @@
 
 {% block content %}
 <h1>Choose a survey to fill out!</h1>
+{% if all_complete %}
+<h2>All available surveys complete!</h2>
+{% else %}
 <form action="/survey-choice" method="POST">
     <label for="survey">Choose a survey:</label>
     <select name="survey">
@@ -12,10 +15,17 @@
     </select>
     <button>Go!</button>
 </form>
+{% endif %}
 <h2>Completed surveys:</h2>
-<ul>
-    {% for survey in completed %}
-    <li>{{ survey.title }} (<a href='/see-answers/{{ survey.ident }}'><i>See answers</i></a>)</li>
-    {% endfor %}
-</ul>
+<div class="wrapper">
+    {% if completed %}
+    <ul>
+        {% for survey in completed %}
+        <li>{{ survey.title }} (<a href='/see-answers/{{ survey.ident }}'><i>See answers</i></a>)</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p id="none-yet">None yet!</p>
+    {% endif %}
+</div>
 {% endblock %}
